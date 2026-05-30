@@ -14,7 +14,7 @@ Ausgangspunkt: Mehrjährige Java-Erfahrung. Ziel: Python lesen, verstehen und sc
 
 Wichtigster Unterschied: Keine geschweiften Klammern, kein Semikolon. Die Einrückung (standardmäßig 4 Leerzeichen) bestimmt die Blockstruktur – sie ist Teil der Syntax und nicht optional.
 
-python
+```python
 # Keine Klammern, kein Semikolon – Einrückung regelt alles
 if x > 0:
     print("positiv")        # eingerückt = im if-Block
@@ -22,3 +22,4 @@ if x > 0:
 else:
     print("nicht positiv")
 print("hier bin ich draußen")
+```
