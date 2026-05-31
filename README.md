@@ -496,6 +496,131 @@ Ausgangspunkt: Mehrjährige Java-Erfahrung. Ziel: Python lesen, verstehen und sc
         | Null-Schlüssel | `None` als Schlüssel erlaubt | Ein `null`-Schlüssel erlaubt |
         | Ordnung | Einfügereihenfolge erhalten (seit Python 3.7) | Keine Garantie (außer `LinkedHashMap`) |
 
+5. List Comprehension in Python   
+    Die List Comprehension ist ein prägnantes Python-Feature, das die Erzeugung von Listen aus einer bestehenden Sequenz in einer Zeile erlaubt – ohne Java-ähnliche Schleifen mit manuellem `.add()`.
+    1. Grundstruktur   
+        ```python
+        [ausdruck for element in iterable if bedingung]
+        ```
+
+        | Teil | Bedeutung |
+        |---|---|
+        | Ausdruck | Was mit jedem Element passiert (kann auch das Element selbst sein) |
+        | `for element in iterable` | Schleife über eine Sequenz |
+        | `if bedingung` *(optional)* | Filter – nur Elemente, die die Bedingung erfüllen |
+
+    2. Einfaches Beispiel   
+        Java – etwas mühsam:   
+        ```java
+        List<Integer> zahlen = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> verdoppelt = new ArrayList<>();
+        for (int z : zahlen) {
+            verdoppelt.add(z * 2);
+        }
+        ```
+        Python – List Comprehension:   
+        ```python
+        zahlen = [1, 2, 3, 4, 5]
+        verdoppelt = [z * 2 for z in zahlen]
+        # Ergebnis: [2, 4, 6, 8, 10]
+        ```
+
+    3. Mit Filter (entspricht `if` innerhalb der Schleife)   
+        Nur gerade Zahlen verdoppeln:
+        ```python
+        zahlen = [1, 2, 3, 4, 5, 6]
+        gerade_verdoppelt = [z * 2 for z in zahlen if z % 2 == 0]
+        # Ergebnis: [4, 8, 12]
+        ```
+        Zum Vergleich – konventionelle Schreibweise:
+        ```python
+        gerade_verdoppelt = []
+        for z in zahlen:
+            if z % 2 == 0:
+                gerade_verdoppelt.append(z * 2)
+        ```
+
+    4. Listen kombinieren   
+        ```python
+        farben = ["rot", "blau"]
+        formen = ["kreis", "quadrat"]
+        
+        kombis = [f"{f} {fo}" for f in farben for fo in formen]
+        # Ergebnis: ['rot kreis', 'rot quadrat', 'blau kreis', 'blau quadrat']
+        ```
+
+    5. Wichtiger Unterschied zu Java Streams   
+        Java 8+ Streams sehen auf den ersten Blick ähnlich aus, sind es aber nicht:
+        ```java
+        // Java Stream
+        List<Integer> result = list.stream()
+            .filter(x -> x % 2 == 0)
+            .map(x -> x * 2)
+            .collect(Collectors.toList());
+        ```
+        ```python
+        # Python List Comprehension
+        result = [x * 2 for x in liste if x % 2 == 0]
+        ```
+
+        | Aspekt | Python List Comprehension | Java Stream |
+        |---|---|---|
+        | Ansatz | Imperativ – kompakte Schleifensyntax | Deklarativ – Pipeline aus Operationen |
+        | Ausführung | Eager – erzeugt sofort die volle Liste | Lazy (erst beim Terminal-Operator) |
+        | Mehrere Operationen | Einzelner Ausdruck mit `if` + `for` | `.filter().map().sorted()` (Method Chaining) |
+        | Leserichtung | Verschachtelt: Ausdruck + `for` + `if` (von innen lesen) | Vorwärts: Datenquelle → filter → map → collect |
+
+    6. Verwandte Formen: Dict Comprehension & Set Comprehension
+       1. Set Comprehension
+            ```python
+            # Alle geraden Quadratzahlen von 0 bis 19
+            gerade_quadrate = {x**2 for x in range(20) if x**2 % 2 == 0}
+            print(gerade_quadrate)
+            # Beispiel-Ausgabe: {0, 4, 16, 36, 64, 100, 144, 196, 256, 324}
+            # (keine Duplikate – deshalb Set statt Liste)
+            
+            # Buchstaben aus einem Satz extrahieren (ohne Doppelte)
+            satz = "Python ist grossartig"
+            buchstaben = {c for c in satz if c.isalpha()}
+            print(buchstaben)
+            # Beispiel-Ausgabe: {'g', 'y', 'a', 't', 'i', 'n', 'P', 'o', 'r', 's'}
+            ```
+            Wichtig: Die Ausgabe ist ungeordnet – ein Set hat keine garantierte Reihenfolge (anders als Listen). Jeder Lauf kann eine andere Anordnung liefern.
+
+        2. Dict Comprehension
+            ```python
+            # Quadratzahlen als Dictionary: Zahl → Quadrat
+            quadrate = {x: x**2 for x in range(5)}
+            print(quadrate)
+            # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+            
+            # Wörter aus einer Liste zählen (Länge → Anzahl)
+            woerter = ["Hund", "Katze", "Maus", "Elefant", "Bär"]
+            laengen = {w: len(w) for w in woerter}
+            print(laengen)
+            # {"Hund": 4, "Katze": 5, "Maus": 4, "Elefant": 7, "Bär": 3}
+            
+            # Bestehendes Dict transformieren – Celsius in Fahrenheit
+            celsius = {"Mo": 20, "Di": 25, "Mi": 18}
+            fahrenheit = {tag: (c * 9/5 + 32) for tag, c in celsius.items()}
+            print(fahrenheit)
+            # {"Mo": 68.0, "Di": 77.0, "Mi": 64.4}
+            
+            # Mit Filter – nur gerade Zahlen mit ihren Quadraten
+            gerade = {x: x**2 for x in range(10) if x % 2 == 0}
+            print(gerade)
+            # {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}
+            ```
+
+    7. Gegenüberstellung d   
+       ```python
+        liste  = [x**2 for x in range(5)]   # [0, 1, 4, 9, 16]             – eckige Klammern
+        menge  = {x**2 for x in range(5)}   # {0, 1, 4, 9, 16}             – geschwungene Klammern, ein Ausdruck
+        dict   = {x: x**2 for x in range(5)} # {0: 0, 1: 1, 2: 4, ...}     – geschwungene Klammern, key: value
+        ```
+        Das Erkennungsmerkmal ist einfach: **ein** Ausdruck → Set. key: value-Paar → Dict.er drei Comprehension-Arten:
+       
+
 
 4. Objektorientierung
     1. Grundstruktur einer Klasse   
