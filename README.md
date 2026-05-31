@@ -266,7 +266,7 @@ Ausgangspunkt: Mehrjährige Java-Erfahrung. Ziel: Python lesen, verstehen und sc
         | Beliebig viele | Mehrere `except`-Blöcke | Mehrere `catch`-Blöcke |
         | Alle fangen | `except Exception as e` | `catch (Exception e)` |        
         
-5. Variablen und Datentypen
+4. Variablen und Datentypen
     1. Allgemeines   
         Python ist **dynamisch typisiert**. Eine Variable hat keinen festen Typ – sie bindet an ein Objekt, der Typ wird zur Laufzeit bestimmt.
         ```python
@@ -312,7 +312,7 @@ Ausgangspunkt: Mehrjährige Java-Erfahrung. Ziel: Python lesen, verstehen und sc
         | **Vergleich auf null / None** | `x is None` – immer mit `is`, nie mit `==` | `x == null` |
         | **Vergleich auf ungleich null / None** | `x is not None` – idiomatisch und bevorzugt | `x != null` |
 
-4. Collections   
+5. Collections   
    1. Listen   
 
         Java:
@@ -496,7 +496,7 @@ Ausgangspunkt: Mehrjährige Java-Erfahrung. Ziel: Python lesen, verstehen und sc
         | Null-Schlüssel | `None` als Schlüssel erlaubt | Ein `null`-Schlüssel erlaubt |
         | Ordnung | Einfügereihenfolge erhalten (seit Python 3.7) | Keine Garantie (außer `LinkedHashMap`) |
 
-5. List Comprehension in Python   
+6. List Comprehension in Python   
     Die List Comprehension ist ein prägnantes Python-Feature, das die Erzeugung von Listen aus einer bestehenden Sequenz in einer Zeile erlaubt – ohne Java-ähnliche Schleifen mit manuellem `.add()`.
     1. Grundstruktur   
         ```python
@@ -612,17 +612,17 @@ Ausgangspunkt: Mehrjährige Java-Erfahrung. Ziel: Python lesen, verstehen und sc
             # {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}
             ```
 
-    7. Gegenüberstellung d   
+    7. Gegenüberstellung der drei Comprehension-Arten:   
        ```python
         liste  = [x**2 for x in range(5)]   # [0, 1, 4, 9, 16]             – eckige Klammern
         menge  = {x**2 for x in range(5)}   # {0, 1, 4, 9, 16}             – geschwungene Klammern, ein Ausdruck
         dict   = {x: x**2 for x in range(5)} # {0: 0, 1: 1, 2: 4, ...}     – geschwungene Klammern, key: value
         ```
-        Das Erkennungsmerkmal ist einfach: **ein** Ausdruck → Set. key: value-Paar → Dict.er drei Comprehension-Arten:
+        Das Erkennungsmerkmal ist einfach: **ein** Ausdruck → Set. **key: value-Paar** → Dict.
        
 
 
-4. Objektorientierung
+7. Objektorientierung
     1. Grundstruktur einer Klasse   
 
         Java:
@@ -826,3 +826,159 @@ Ausgangspunkt: Mehrjährige Java-Erfahrung. Ziel: Python lesen, verstehen und sc
             # Verbinde zu example.com:port 443 (SSL: True)
             ```
 
+8. Vererbung
+
+    1. Basisklasse Object   
+       Sowohl Python als auch Java verwenden ein universelle Basisklasse, von dem alle Klassen (auch implizit) erben.   
+       ```python
+        # Explizit (identisch zu implizit):
+        class MeineKlasse(object):
+            pass
+        
+        # Implizit (gleiches Ergebnis):
+        class MeineKlasse:
+            pass
+        ```
+        
+    2. Grundlegende Vererbung   
+        Java:
+        ```java
+        // Einfache Vererbung
+        public class Fahrzeug {
+            protected String marke;
+        
+            public void starten() {
+                System.out.println("Fahrzeug startet");
+            }
+        }
+        
+        public class Auto extends Fahrzeug {
+            private int tueren;
+        
+            @Override
+            public void starten() {
+                System.out.println("Auto startet");
+            }
+        }
+        ```
+        Python:
+        ```python
+        class Fahrzeug:
+            def __init__(self, marke):
+                self.marke = marke        # protected? Nein – alles public
+        
+            def starten(self):
+                print("Fahrzeug startet")
+        
+        
+        class Auto(Fahrzeug):            # extends durch Klammern
+            def __init__(self, marke, tueren):
+                super().__init__(marke)   # super() = super()
+                self.tueren = tueren
+        
+            def starten(self):            # @Override nicht nötig – automatisch
+                print("Auto startet")
+        ```
+        
+        | Aspekt | Python | Java |
+        |---|---|---|
+        | Vererbung | `class A(B):` | `class A extends B` |
+        | Methode der Superklasse | `super().methode()` | `super.methode()` |
+        | Überschreiben  | Nicht vorhanden – Methode überschreibt automatisch | `@Override` Erzwungen |
+        | protected | Konvention: `_attribut` (nur Hinweis) | Explizites Schlüsselwort |
+        | private | `__attribut` (Name Mangling) | `private` |
+        
+
+    3. Abstrakte Klassen & Methoden   
+
+        Java:
+        ```java
+        public abstract class Tier {
+            public abstract void geraeuschMachen();
+        
+            public void schlafen() {
+                System.out.println("Zzz...");
+            }
+        }
+        
+        public class Hund extends Tier {
+            @Override
+            public void geraeuschMachen() {
+                System.out.println("Wuff!");
+            }
+        }
+        
+        // Tier t = new Tier();  // ❌ Compiler-Fehler
+        ```
+        
+        Python verwendet das Modul abc (Abstract Base Classes):
+        ```python
+        from abc import ABC, abstractmethod
+        
+        class Tier(ABC):                    # ABC = Abstract Base Class
+            @abstractmethod
+            def geraeusch_machen(self):     # abstrakte Methode – kein Body nötig
+                pass
+        
+            def schlafen(self):             # konkrete Methode
+                print("Zzz...")
+        
+        
+        class Hund(Tier):
+            def geraeusch_machen(self):     # Muss implementiert werden, sonst Fehler
+                print("Wuff!")
+
+        # t = Tier()      # ❌ TypeError: Can't instantiate abstract class
+        # h = Hund()      # ✅ funktioniert
+        ```
+        
+        
+        | Aspekt | Python | Java |
+        |---|---|---|
+        | Modul | `from abc import ABC, abstractmethod` | Sprachbuilt-in |
+        | Basisklasse | `class X(ABC):` | `abstract class` |
+        | Abstrakte Methode | `@abstractmethod` über `def m(self): pass` | `abstract void m();` |
+        | Body der abstrakten Methode | `pass` reicht, geht aber auch mit Implementierung | Kein Body |
+        | Instanziierung | `TypeError` zur Laufzeit | Compiler-Fehler |
+
+    4. Mehrfachvererbung in Python
+        1. Grundidee   
+            In Python ist die Mehrfachvererbung erlaubt. Java kennt keine Mehrfachvererbung für Klassen (nur Interfaces).
+            ```python
+            class Flieger:
+                def bewegen(self):
+                    print("Flieger fliegt durch die Luft")
+            
+                def landen(self):
+                    print("Flieger landet")
+            
+            
+            class Boot:
+                def bewegen(self):
+                    print("Boot fährt übers Wasser")
+            
+                def anlegen(self):
+                    print("Boot legt an")
+            
+            class Amphibienfahrzeug(Flieger, Boot):   # Mehrfachvererbung!
+                pass
+            ```
+
+        2. MRO (Method Resolution Order)   
+            Wenn beide Eltern dieselbe Methode definieren, gewinnt die zuerst genannte Klasse:
+            ```python
+            a = Amphibienfahrzeug()
+            a.bewegen()    # "Flieger fliegt durch die Luft" – Flieger steht zuerst
+            a.landen()     # "Flieger landet"
+            a.anlegen()    # "Boot legt an"
+            ```
+            Die MRO bestimmt die Suchreihenfolge – einsehbar mit `__mro__`:
+            
+            ```python
+            print(Amphibienfahrzeug.__mro__)
+            # (<class 'Amphibienfahrzeug'>, <class 'Flieger'>, <class 'Boot'>, <class 'object'>)
+            ```
+            Python durchsucht die Klassen in exakt dieser Reihenfolge und nimmt die erste gefundene Methode.
+
+            Details bitte [hier](https://www.python.org/download/releases/2.3/mro/ "detaillierte Erklärung bei python.org") und ein [Beispiel](https://www.python-kurs.eu/python3_mehrfachvererbung.php "kleines Beispiel bei python-kurs.eu")
+           
