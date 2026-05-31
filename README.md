@@ -69,7 +69,7 @@ if x > 0:
 else:
     print("nicht positiv")
 print("hier bin ich draußen")  
-```
+```   
 [Zum Anfang springen](#top)
 ## 2. Einfache Kontrollstrukturen
    
@@ -121,7 +121,7 @@ if 42: pass         # True   – alles andere
 # Gleiches in Java nicht möglich – braucht explizite Prüfung
 String s = "";
 if (s.isEmpty()) { ... }   // explizit nötig
-```
+```   
 [Zum Anfang springen](#top)           
 ### 2.2. For\-Schleife
 
@@ -174,7 +174,8 @@ for idx, n in enumerate(namen):
 | Bereich, Intervall      | `for i in range(1, 11, 2):`          | `for (int i=1; i<=10; i+=2)` |
 | Iterierbarkeit          | Alles mit `__iter__()` (Duck-Typing) | `Iterable`-Interface         |
 | break / continue        | vorhanden                            | vorhanden                    |
-| else-Block bei Schleife | `else`                               | Nicht vorhanden              |
+| else-Block bei Schleife | `else`                               | Nicht vorhanden              |   
+
 [Zum Anfang springen](#top)
 ### 2.3. While\-Schleife
 Die while-Schleife ist in beiden Sprachen sehr ähnlich, aber es gibt feine Unterschiede:   
@@ -204,7 +205,8 @@ while i < 5:
 | Blockbegrenzung  | Einrückung nach Doppelpunkt `:`                        | Geschwungene Klammern `{ }` |
 | Inkrement        | `i += 1`, `i -= 1` (es gibt keinen `++`/`--`-Operator) | `i++`, `i--`, `++i`, `--i`  |
 | break / continue | vorhanden                                              | vorhanden                   |
-| else-Block       | `else` wird nach Schleifenende ausgeführt              | Nicht vorhanden             |
+| else-Block       | `else` wird nach Schleifenende ausgeführt              | Nicht vorhanden             |   
+
 [Zum Anfang springen](#top)
 ### 2.4 Do-While-Schleife
 
@@ -223,7 +225,7 @@ weiter = True
 while weiter:
     antwort = input("Weiter? (j/n): ")
     weiter = (antwort.lower() == 'j')
-```
+```   
 [Zum Anfang springen](#top)
 ## 3. Erweiterte Kontrollstrukturen
 ### 3.1. Mehrfachverzweigung
@@ -283,7 +285,8 @@ match form:
 | Fall beendet sich           | Kein `break` – automatischer Ausstieg        | `break` nötig, außer bei Pfeil-Syntax |
 | Vergleichsart               | Pattern Matching (Strukturen, Typen, Guards) | Nur Wertevergleiche                   |
 | Default-Fall                | `case _:` (Wildcard)                         | `default:`                            |
-| Mehrere Werte in einem Fall | `case 1 \| 2:` (ODER-Verknüpfung)            | `case 1: case 2:` (Fall-through)      |
+| Mehrere Werte in einem Fall | `case 1 \| 2:` (ODER-Verknüpfung)            | `case 1: case 2:` (Fall-through)      |   
+
 [Zum Anfang springen](#top)
 ### 3.2. Fehlerbehandlung
 
@@ -315,7 +318,8 @@ finally:
 | Fehlerbindung   | `except Typ as e:`              | `catch (Typ e)`             |
 | Blockbegrenzung | Einrückung nach Doppelpunkt `:` | Geschwungene Klammern `{ }` |
 | Beliebig viele  | Mehrere `except`-Blöcke         | Mehrere `catch`-Blöcke      |
-| Alle fangen     | `except Exception as e`         | `catch (Exception e)`       |        
+| Alle fangen     | `except Exception as e`         | `catch (Exception e)`       |      
+
 [Zum Anfang springen](#top)       
 ## 4. Variablen und Datentypen
 ### 4.1. Allgemeines
@@ -351,7 +355,7 @@ print(float(3))              # 3.0  – explizit zu float
 ```
 
 Achtung: `/` in Python liefert immer `float` (`3/2 = 1.5`). `//` ist die Ganzzahldivision. 
-Genau umgekehrt zu Java, wo `/` bei zwei `int`-Operanden die Ganzzahldivision ist.
+Genau umgekehrt zu Java, wo `/` bei zwei `int`-Operanden die Ganzzahldivision ist.   
 [Zum Anfang springen](#top)
 ### 4.2. Referenz- und Inhaltsvergleich
    
@@ -410,7 +414,7 @@ print(zahlen[1:4])     # [1, 2, 3]  – von Index 1 bis 3
 print(zahlen[:3])      # [0, 1, 2]  – erstes bis drittes
 print(zahlen[::2])     # [0, 2, 4]  – jedes zweite
 print(zahlen[::-1])    # [5, 4, 3, 2, 1, 0]  – umgekehrt
-```
+```   
 [Zum Anfang springen](#top)
 ### 5.2. Tuples
 Tuples haben kein direktes Java-Äquivalent – sie sind unveränderliche (immutable) Listen:
@@ -435,7 +439,7 @@ erg = min_max([5, 2, 8, 1])
 print(erg)               # (1, 8)
 mn, mx = erg
 print(mn, mx)            # 1 8
-```
+```   
 [Zum Anfang springen](#top)
 ### 5.3. Sets (Mengen)
 Java:
@@ -491,7 +495,7 @@ print(a ^ b)          # Sym. Differenz: {1, 2, 5, 6}
 print(a.issubset(b))      # False
 print(a.issuperset(b))    # False
 print(a.isdisjoint({5}))   # False
-```
+```   
 [Zum Anfang springen](#top)
 ### 5.4. Assoziative Arrays
 Java:
@@ -542,8 +546,8 @@ for v in d.values():
 | Alle Paare         | `.items()` → Tupel `(key, value)`                      | `.entrySet()` → `Map.Entry`                                             |
 | Durchlaufen        | `for k, v in d.items():`                               | `for (Map.Entry<K,V> e : map.entrySet()) { e.getKey(); e.getValue(); }` |
 | Typisierung        | Dynamisch – Schlüssel und Werte gemischt möglich       | Generics: `Map<String, Integer>` (Bsp.)                                 |
-| Null-Schlüssel     | `None` als Schlüssel erlaubt                           | Ein `null`-Schlüssel erlaubt                                            |
-
+| Null-Schlüssel     | `None` als Schlüssel erlaubt                           | `null` als Schlüssel erlaubt                                            |   
+   
 [Zum Anfang springen](#top)
 ## 6. List Comprehensions
 Die List Comprehension ist ein prägnantes Python-Feature, das die Erzeugung von Listen aus einer bestehenden Sequenz in einer Zeile erlaubt – ohne Java-ähnliche Schleifen mit manuellem `.add()`.
@@ -573,6 +577,7 @@ zahlen = [1, 2, 3, 4, 5]
 verdoppelt = [z * 2 for z in zahlen]
 # Ergebnis: [2, 4, 6, 8, 10]
 ```
+
 [Zum Anfang springen](#top)
 ### 6.3. Mit Filter
 Nur gerade Zahlen verdoppeln:
@@ -618,7 +623,8 @@ result = [x * 2 for x in liste if x % 2 == 0]
 | Ansatz              | Imperativ – kompakte Schleifensyntax                     | Deklarativ – Pipeline aus Operationen          |
 | Ausführung          | Eager – erzeugt sofort die volle Liste                   | Lazy (erst beim Terminal-Operator)             |
 | Mehrere Operationen | Einzelner Ausdruck mit `if` + `for`                      | `.filter().map().sorted()` (Method Chaining)   |
-| Leserichtung        | Verschachtelt: Ausdruck + `for` + `if` (von innen lesen) | Vorwärts: Datenquelle → filter → map → collect |
+| Leserichtung        | Verschachtelt: Ausdruck + `for` + `if` (von innen lesen) | Vorwärts: Datenquelle → filter → map → collect |   
+
 [Zum Anfang springen](#top)
 ### 6.6. Verwandte Formen
 #### 6.6.1. Set Comprehension
@@ -660,7 +666,7 @@ print(fahrenheit)
 gerade = {x: x**2 for x in range(10) if x % 2 == 0}
 print(gerade)
 # {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}
-```
+```   
 [Zum Anfang springen](#top)
 ### 6.7. Zusammenstellung der drei Comprehension-Arten
 
@@ -708,7 +714,8 @@ class Person:
 | Sichtbarkeit von Attributen und Methoden     | Keine echten Zugriffsmodifikatoren; alles ist öffentlich. Konvention: `_name` für „protected“, `__name` für „private“ (Name Mangling) | `public`, `private`, `protected` |
 | Klassenkopf und Blockstruktur                | `class Person:` plus Einrückung                                                                                                       | `class Person { ... }`           |
 | Konstruktor / Initialisierung                | Konstruktor heißt `__init__`                                                                                                          | Konstruktor: `Person(...)`       |
-| Objekterzeugung                              | `Person()` – kein `new`-Schlüsselwort                                                                                                 | `new Person(...)`                |
+| Objekterzeugung                              | `Person()` – kein `new`-Schlüsselwort                                                                                                 | `new Person(...)`                |   
+
 [Zum Anfang springen](#top)
 ### 7.2. Methoden
 Python nutzt Dekoratoren (`@`) statt Schlüsselwörter wie `static`.   
@@ -749,7 +756,8 @@ u.klassen_methode()     # funktioniert auch, übergibt Util als cls
 # Statische Methode
 Util.statische_methode()
 ```
-Warum `@classmethod`? Anders als Java-`static` kennt `cls` die Vererbungshierarchie. Wenn eine Subclass die Methode aufruft, ist `cls` die Subclass – nützlich für Factory-Methoden.
+Warum `@classmethod`? Anders als Java-`static` kennt `cls` die Vererbungshierarchie. Wenn eine Subclass die Methode aufruft, ist `cls` die Subclass – nützlich für Factory-Methoden.   
+
 [Zum Anfang springen](#top)
 ### 7.3. Sondermethoden
 
@@ -780,6 +788,7 @@ Stattdessen nutzt Python flexible Parameter-Mechanismen:
 - Default-Werte (optionale Parameter)
 - *args (beliebig viele Positionsargumente → Tupel)
 - **kwargs (beliebig viele Schlüsselwort-Argumente → Dict)
+
 [Zum Anfang springen](#top)
 #### 7.7.1. Default-Werte
 Python erlaubt Default-Werte direkt in der Signatur (in Java erst seit Kurzem mit Records/Builder-Pattern oder überladenen Methoden simuliert):
@@ -802,7 +811,7 @@ def fehler(a=1, b):
 # RICHTIG
 def richtig(b, a=1):
     pass
-```
+```   
 [Zum Anfang springen](#top)
 #### 7.7.2. *args – Beliebig viele Positionsargumente als Tupel   
 Entspricht Java-Varargs (int... zahlen):
@@ -836,7 +845,7 @@ def sum(a, b, c):
 
 werte = [5, 10, 15]
 print(sum(*werte))          # 30
-```
+```   
 [Zum Anfang springen](#top)
 #### 7.7.3. **kwargs – Beliebige Schlüsselwort-Argumente als Dict
 `**kwargs` sammelt alle benannten (Keyword-)Argumente in einem Dictionary:
@@ -877,7 +886,7 @@ config = {"host": "example.com", "port": 443, "ssl": True}
 # Entpacken beim Aufruf:
 verbinde(**config)
 # Verbinde zu example.com:port 443 (SSL: True)
-```
+```   
 [Zum Anfang springen](#top)
 ## 8. Vererbung
 
@@ -939,7 +948,7 @@ class Auto(Fahrzeug):            # extends durch Klammern
 | Methode der Superklasse | `super().methode()`                                | `super.methode()`        |
 | Überschreiben           | Nicht vorhanden – Methode überschreibt automatisch | `@Override` Erzwungen    |
 | protected               | Konvention: `_attribut` (nur Hinweis)              | Explizites Schlüsselwort |
-| private                 | `__attribut` (Name Mangling)                       | `private`                |
+| private                 | `__attribut` (Name Mangling)                       | `private`                |   
 
 [Zum Anfang springen](#top)
 ### 8.3. Abstrakte Klassen & Methoden
@@ -992,7 +1001,8 @@ class Hund(Tier):
 | Basisklasse                 | `class X(ABC):`                                   | `abstract class`     |
 | Abstrakte Methode           | `@abstractmethod` über `def m(self): pass`        | `abstract void m();` |
 | Body der abstrakten Methode | `pass` reicht, geht aber auch mit Implementierung | Kein Body            |
-| Instanziierung              | `TypeError` zur Laufzeit                          | Compiler-Fehler      |
+| Instanziierung              | `TypeError` zur Laufzeit                          | Compiler-Fehler      |   
+
 [Zum Anfang springen](#top)
 ### 8.4. Mehrfachvererbung
 #### 8.8.1. Grundidee
@@ -1015,7 +1025,7 @@ class Boot:
 
 class Amphibienfahrzeug(Flieger, Boot):   # Mehrfachvererbung!
     pass
-```
+```   
 [Zum Anfang springen](#top)
 #### 8.8.2. MRO (Method Resolution Order)
 Wenn beide Eltern dieselbe Methode definieren, gewinnt die zuerst genannte Klasse:
@@ -1033,5 +1043,5 @@ print(Amphibienfahrzeug.__mro__)
 ```
 Python durchsucht die Klassen in exakt dieser Reihenfolge und nimmt die erste gefundene Methode.
 
-Details bitte [hier](https://www.python.org/download/releases/2.3/mro/ "detaillierte Erklärung bei python.org") und ein [Beispiel](https://www.python-kurs.eu/python3_mehrfachvererbung.php "kleines Beispiel bei python-kurs.eu")
+Details bitte [hier](https://www.python.org/download/releases/2.3/mro/ "detaillierte Erklärung bei python.org") und ein [Beispiel](https://www.python-kurs.eu/python3_mehrfachvererbung.php "kleines Beispiel bei python-kurs.eu")   
 [Zum Anfang springen](#top)
