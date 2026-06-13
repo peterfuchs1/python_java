@@ -7,10 +7,11 @@ class Konto:
         """
         Kontruktor
 
-        :param inhaber:
-        :param kontostand:
+        :param inhaber: neuer Inhaber des Kontos
+        :param kontostand: neuer Kontostand
         """
         # Instanzvariablen (pro Objekt)
+        self._inhaber = ""
         self.inhaber = inhaber
         self._kontostand = 0.0
         self.kontostand = kontostand  # nutzt den Setter für Validierung
@@ -19,48 +20,99 @@ class Konto:
     # Dunder-Methode: offizielle String-Repräsentation (für Entwickler)
     def __repr__(self) -> str:
         """
-
+        Methode, die die offizielle String-Repräsentation eines Kontos zurückgibt.
         :return:
         """
         return f"Konto(inhaber={self.inhaber!r}, kontostand={self.kontostand:.2f}, waehrung={Konto.WAEHRUNG!r})"
 
     # Dunder-Methode: benutzerfreundliche Ausgabe (für Benutzer)
     def __str__(self) -> str:
+        """
+        Methode, die zur Ausgabe eines Kontos verwendet wird
+        :return: Konto als str
+        """
         return f"Konto von {self.inhaber}: {self.kontostand:.2f} {Konto.WAEHRUNG}"
 
     # Dunder-Methode: Vergleich zweier Objekte
     def __eq__(self, other) -> bool:
+        """
+        Inhaltsvergleich mit einem anderen Konto
+        :param other: anderes Konto
+        """
         if not isinstance(other, Konto):
             return NotImplemented
         return self.inhaber == other.inhaber and self.kontostand == other.kontostand
 
     # Dunder-Methode: Aufrufbar wie eine Funktion
     def __call__(self, betrag: float) -> None:
-        # Einzahlen über Funktionsaufruf: konto(100)
+        """
+        Einzahlen über Funktionsaufruf: konto(100)
+        """
         self.einzahlen(betrag)
 
     # Dunder-Methode: Wird beim Löschen der Instanz aufgerufen (nicht immer garantiert!)
     def __del__(self):
+        """
+        Wird aufgerufen, wenn die Instanz gelöscht wird.
+        Hier reduzieren wir die Anzahl der Konten.
+        Achtung: In Python ist nicht garantiert, dass __del__ immer aufgerufen wird (z.B. bei Programmende).
+        """
         Konto.ANZAHL_KONTEN -= 1
+
+    @property
+    def inhaber(self) -> str:
+        """
+        Gibt den Namen des Kontoinhabers zurück.
+        :return: Der Name des Kontoinhabers
+        """
+        return self._inhaber
+
+    # Property-Decorator: Setter mit Validierung
+    @inhaber.setter
+    def inhaber(self, inhaber: str) -> None:
+        """
+        Setzt den Namen des Kontoinhabers. Der Name darf nicht leer sein.
+        :param inhaber: Der Name des Kontoinhabers
+        """
+        if inhaber is None or not inhaber.strip():
+            raise ValueError("Inhabername darf nicht leer sein.")
+        inhaber = str(inhaber)
+        self._inhaber = inhaber.strip()
 
     # Property-Decorator: Getter
     @property
     def kontostand(self) -> float:
+        """
+        gibt den Kontostand zurück
+        :return: Kontostand als float
+        """
         return self._kontostand
 
     # Property-Decorator: Setter mit Validierung
     @kontostand.setter
     def kontostand(self, wert: float) -> None:
+        """
+        Setzt den Kontostand. Der Kontostand darf nicht negativ sein.
+        :param wert: Neuer Kontostand
+        """
         if wert < 0:
             raise ValueError("Kontostand darf nicht negativ sein.")
         self._kontostand = float(wert)
 
     def einzahlen(self, betrag: float) -> None:
+        """
+        Einen Betrag auf das Konto einzahlen
+        :param betrag: Betrag
+        """
         if betrag <= 0:
             raise ValueError("Einzahlungsbetrag muss positiv sein.")
         self._kontostand += betrag
 
     def auszahlen(self, betrag: float) -> None:
+        """
+        Einen Betrag vom Konto auszahlen
+        :param betrag: Auszahlungsbetrag
+        """
         if betrag <= 0:
             raise ValueError("Auszahlungsbetrag muss positiv sein.")
         if betrag > self._kontostand:
@@ -70,13 +122,18 @@ class Konto:
     # Statische Methode: benötigt weder cls noch self
     @staticmethod
     def ist_gueltiger_betrag(betrag: float) -> bool:
+        """
+        testet, ob der Betrag gültig ist
+        :param betrag: Betrag (positive Zahl)
+        """
         return isinstance(betrag, (int, float)) and betrag > 0
 
     @classmethod
     def von_string(cls, daten: str):
         """
         Alternativer Konstruktor.
-        Erwartetes Format: 'Inhaber;Kontostand', z. B. 'Clara;350.75'
+
+        :param daten: Erwartetes Format: 'Inhaber;Kontostand', z. B. 'Clara;350.75'
         """
         teile = daten.split(";")
         if len(teile) != 2:
